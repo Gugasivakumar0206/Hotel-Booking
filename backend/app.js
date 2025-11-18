@@ -5,62 +5,47 @@ const mongoose = require('mongoose');
 mongoose.pluralize(null);
 const cors = require('cors');
 const bodyParser = require('body-parser');
+
 const fs = require('fs').promises;
 const path = require('path');
-
 const configPath = path.resolve(__dirname, 'helpers', 'config.json');
-const machineId = require('node-machine-id');
 
-let machineID; 
+const machineId = require('node-machine-id');
+let machineID;
 let license = "u3Y65£,;7Y#I";
 
-// Get Machine ID (Render server will have a different ID)
 machineId.machineId()
   .then(id => { machineID = id; })
-  .catch(error => { console.error('Error getting Machine ID:', error); });
+  .catch(error => console.error('Error getting machine ID:', error));
 
-
-// ⚠️ FIXED LICENSE MIDDLEWARE FOR RENDER
+// 🔥 License middleware FIXED
 app.use(async (req, res, next) => {
   try {
     const configData = await fs.readFile(configPath, 'utf-8');
     const config = JSON.parse(configData);
     const storedLicense = config.license;
 
-    // ON YOUR LOCAL SYSTEM → VALIDATION CHECK
-    if (process.env.RENDER !== "true") {
-      if (storedLicense.licenseCode === license && storedLicense.deviceId === machineID) {
-        return next();
-      } else {
-        return res.status(401).json({ message: "Invalid License" });
-      }
+    if (storedLicense.licenseCode === license && storedLicense.deviceId === machineID) {
+      return next();
+    } else {
+      return res.status(401).json({ message: "Invalid license" });
     }
-
-    // ON RENDER SERVER → ALWAYS ALLOW
-    next();
-
   } catch (error) {
-    console.error('License check failed:', error);
-    // DO NOT EXIT SERVER ON HOSTING PLATFORM
-    next();
+    console.error("License read error:", error);
+    return res.status(401).json({ message: "License verification failed" });
   }
 });
 
-
-// Environment (.env)
 require('dotenv/config');
 
-// CORS
 app.use(cors());
 app.options('*', cors());
-
-// Middleware
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Routes
+// ROUTES
 const feedbackRoutes = require('./routes/feedback');
 const hostelRoutes = require('./routes/hostel');
 const userRoutes = require('./routes/user');
@@ -81,21 +66,18 @@ app.use(`${api}/booking`, bookingRoutes);
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-
-// Database Connection
+// DB CONNECTION
 mongoose.connect(process.env.CONNECTION_STRING, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   dbName: 'hotel'
 })
-.then(() => console.log("Database Connection is ready..."))
-.catch(err => console.log(err));
+  .then(() => console.log('Database Connection is ready...'))
+  .catch(err => console.log(err));
 
-
-// SERVER FIXED FOR RENDER
+// 🔥 RENDER FIX → port must bind to 0.0.0.0
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
-
