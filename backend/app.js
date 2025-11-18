@@ -5,47 +5,40 @@ const mongoose = require('mongoose');
 mongoose.pluralize(null);
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
-const fs = require('fs').promises;
 const path = require('path');
-const configPath = path.resolve(__dirname, 'helpers', 'config.json');
+require('dotenv').config();
 
-const machineId = require('node-machine-id');
-let machineID;
-let license = "u3Y65£,;7Y#I";
+/* ==========================================================
+   🚨 LICENSE CHECK REMOVED FOR SERVER (Render Deployment)
+   If you want license on local only, add it in a separate file
+   ========================================================== */
 
-machineId.machineId()
-  .then(id => { machineID = id; })
-  .catch(error => console.error('Error getting machine ID:', error));
-
-// 🔥 License middleware FIXED
-app.use(async (req, res, next) => {
-  try {
-    const configData = await fs.readFile(configPath, 'utf-8');
-    const config = JSON.parse(configData);
-    const storedLicense = config.license;
-
-    if (storedLicense.licenseCode === license && storedLicense.deviceId === machineID) {
-      return next();
-    } else {
-      return res.status(401).json({ message: "Invalid license" });
-    }
-  } catch (error) {
-    console.error("License read error:", error);
-    return res.status(401).json({ message: "License verification failed" });
-  }
-});
-
-require('dotenv/config');
-
-app.use(cors());
+// =======================
+//  BASIC MIDDLEWARE
+// =======================
+app.use(
+  cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  })
+);
 app.options('*', cors());
+
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// ROUTES
+// =======================
+//  HEALTH CHECK (Needed for Render)
+// =======================
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', message: 'Backend is running' });
+});
+
+// =======================
+//  ROUTES
+// =======================
 const feedbackRoutes = require('./routes/feedback');
 const hostelRoutes = require('./routes/hostel');
 const userRoutes = require('./routes/user');
@@ -54,7 +47,7 @@ const adminRoutes = require('./routes/admin');
 const bookingRoutes = require('./routes/booking');
 const roomRoutes = require('./routes/room');
 
-const api = process.env.API_URL;
+const api = process.env.API_URL || '/api/v1';
 
 app.use(`${api}/room`, roomRoutes);
 app.use(`${api}/hostel`, hostelRoutes);
@@ -66,18 +59,28 @@ app.use(`${api}/booking`, bookingRoutes);
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-// DB CONNECTION
-mongoose.connect(process.env.CONNECTION_STRING, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  dbName: 'hotel'
-})
-  .then(() => console.log('Database Connection is ready...'))
-  .catch(err => console.log(err));
+// =======================
+//  DATABASE
+// =======================
+mongoose
+  .connect(process.env.CONNECTION_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: 'hotel',
+  })
+  .then(() => {
+    console.log('Database Connection is ready...');
+  })
+  .catch((err) => {
+    console.log('DB error:', err);
+  });
 
-// 🔥 RENDER FIX → port must bind to 0.0.0.0
+// =======================
+//  SERVER
+// =======================
 const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, "0.0.0.0", () => {
+// Render REQUIRES 0.0.0.0, NOT localhost
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
