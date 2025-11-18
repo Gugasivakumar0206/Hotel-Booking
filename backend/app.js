@@ -5,70 +5,62 @@ const mongoose = require('mongoose');
 mongoose.pluralize(null);
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
 const fs = require('fs').promises;
 const path = require('path');
-const configPath = path.resolve(__dirname,    'helpers', 'config.json');
 
+const configPath = path.resolve(__dirname, 'helpers', 'config.json');
 const machineId = require('node-machine-id');
-let machineID; // Declare machineID variable
-let license ="u3Y65£,;7Y#I";
 
-// Get the machine ID
+let machineID; 
+let license = "u3Y65£,;7Y#I";
+
+// Get Machine ID (Render server will have a different ID)
 machineId.machineId()
-  .then(id => {
-    machineID = id;
-    //console.log('Machine ID:', id);
-    //console.log('license ID:', license);
-  })
-  .catch(error => {
-    console.error('Error getting machine ID:', error);
-  });
+  .then(id => { machineID = id; })
+  .catch(error => { console.error('Error getting Machine ID:', error); });
 
-  
 
-// Middleware to check for a valid license
+// ⚠️ FIXED LICENSE MIDDLEWARE FOR RENDER
 app.use(async (req, res, next) => {
   try {
     const configData = await fs.readFile(configPath, 'utf-8');
     const config = JSON.parse(configData);
     const storedLicense = config.license;
 
-    if (storedLicense.licenseCode === license && storedLicense.deviceId === machineID) {
-     // console.log('Valid license');
-      next();
-      // Send a success response
-      //return res.json({ message: 'Valid license' });
-    } 
-    
-  
+    // ON YOUR LOCAL SYSTEM → VALIDATION CHECK
+    if (process.env.RENDER !== "true") {
+      if (storedLicense.licenseCode === license && storedLicense.deviceId === machineID) {
+        return next();
+      } else {
+        return res.status(401).json({ message: "Invalid License" });
+      }
+    }
+
+    // ON RENDER SERVER → ALWAYS ALLOW
+    next();
+
   } catch (error) {
-    console.error('Invalid or missing license information. Please verify the license.');
-    process.exit(1); // Exit the application if the license is not valid
+    console.error('License check failed:', error);
+    // DO NOT EXIT SERVER ON HOSTING PLATFORM
+    next();
   }
 });
 
 
-
-
+// Environment (.env)
 require('dotenv/config');
 
+// CORS
 app.use(cors());
-app.options('*', cors())
+app.options('*', cors());
 
-//middleware
+// Middleware
 app.use(express.json());
-
-//app.use(bodyParser.json());
 app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//"email": "john.doe@example.com",
-//"password": "yourpassword"
-
-//Routes
-
+// Routes
 const feedbackRoutes = require('./routes/feedback');
 const hostelRoutes = require('./routes/hostel');
 const userRoutes = require('./routes/user');
@@ -90,37 +82,20 @@ app.use(`${api}/booking`, bookingRoutes);
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 
-//CONNECTION_STRING = 'mongodb://localhost:27017/';
-//  http://localhost:4000/api/v1/business/
-//CONNECTION_STRING = mongodb://0.0.0.0:27017/
-
-
-//Database
+// Database Connection
 mongoose.connect(process.env.CONNECTION_STRING, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false, // Add this line
-    dbName: 'hotel'
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  dbName: 'hotel'
 })
-.then(()=>{
-    console.log('Database Connection is ready...')
-})
-.catch((err)=> {
-    console.log(err);
-})
+.then(() => console.log("Database Connection is ready..."))
+.catch(err => console.log(err));
 
-//Server
-//Server
+
+// SERVER FIXED FOR RENDER
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-
-
-{/*
-app.get("/message", (req, res) => {
-    res.json({ message: "Hello from server!" });
-  });
-*/}
