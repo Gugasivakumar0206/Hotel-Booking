@@ -110,10 +110,12 @@ mongoose.connect(process.env.CONNECTION_STRING, {
 })
 
 //Server
-app.listen(4000, ()=>{
+const PORT = process.env.PORT || 4000;
 
-    console.log('server is running http://localhost:4000');
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 })
+
 
 {/*
 app.get("/message", (req, res) => {
