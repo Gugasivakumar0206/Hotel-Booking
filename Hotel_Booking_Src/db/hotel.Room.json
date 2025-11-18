@@ -1,0 +1,89 @@
+[{
+  "_id": {
+    "$oid": "65fd1d0dbc47e626343e1920"
+  },
+  "owneremail": "owner@gmail.com",
+  "name": "Ab_Hotel",
+  "type": "Standard Double Room",
+  "price": "5000",
+  "vacancy": "5",
+  "dateCreated": {
+    "$date": "2024-03-22T05:54:21.797Z"
+  },
+  "__v": 0,
+  "image": "public\\uploads\\1711361846198-standard-single-room.jpg"
+},
+{
+  "_id": {
+    "$oid": "65fd2ba03f1f6c2c7003d3ab"
+  },
+  "owneremail": "owner@gmail.com",
+  "name": "Ab_Hotel",
+  "type": "Economy Single Room",
+  "price": "7000",
+  "vacancy": "1",
+  "dateCreated": {
+    "$date": "2024-03-22T06:56:32.284Z"
+  },
+  "__v": 0,
+  "image": "public\\uploads\\1711362056070-economy-single-rooms.jpg"
+},
+{
+  "_id": {
+    "$oid": "65fd2bb53f1f6c2c7003d3b3"
+  },
+  "owneremail": "owner@gmail.com",
+  "name": "Ab_Hotel",
+  "type": "Premium Studio Room",
+  "price": "10000",
+  "vacancy": "2",
+  "dateCreated": {
+    "$date": "2024-03-22T06:56:53.894Z"
+  },
+  "__v": 0,
+  "image": "public\\uploads\\1711361635081-room.jpg"
+},
+{
+  "_id": {
+    "$oid": "65fd2bce3f1f6c2c7003d3bb"
+  },
+  "owneremail": "owner@gmail.com",
+  "name": "Ab_Hotel",
+  "type": "Deluxe Triple Room",
+  "price": "14000",
+  "vacancy": "3",
+  "dateCreated": {
+    "$date": "2024-03-22T06:57:18.076Z"
+  },
+  "__v": 0,
+  "image": "public\\uploads\\1711361835592-Deluxe-Triple-Room-Image.jpg"
+},
+{
+  "_id": {
+    "$oid": "65fd3af3aa2cba1468be084b"
+  },
+  "owneremail": "owner2@gmail.com",
+  "name": "Pg_Hostel2",
+  "type": "Economy Single Room",
+  "price": "10000",
+  "vacancy": "1",
+  "dateCreated": {
+    "$date": "2024-03-22T08:01:55.077Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "660102a732ff9a20e4aefaab"
+  },
+  "owneremail": "owner@gmail.com",
+  "name": "Ab_Hotel",
+  "type": "Star",
+  "price": "1000",
+  "vacancy": "1",
+  "dateCreated": {
+    "$date": "2024-03-25T04:50:47.730Z"
+  },
+  "__v": 0,
+  "image": "public\\uploads\\1711361866040-star room.jpg"
+}]

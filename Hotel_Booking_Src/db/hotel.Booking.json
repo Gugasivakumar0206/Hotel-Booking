@@ -1,0 +1,80 @@
+[{
+  "_id": {
+    "$oid": "65feab218fa3e81594429d19"
+  },
+  "owneremail": "owner@gmail.com",
+  "email": "user@gmail.com",
+  "name": "Ab_Hotel",
+  "vacancy": "7",
+  "type": "Standard Double Room",
+  "price": "5000",
+  "cusname": "Harry",
+  "personcount": "2",
+  "mobile": "9876543210",
+  "address": "No.1, North Main road, Krishnapuram, Kumbakonam, Thanjavur dist. PIN- 600045",
+  "amount": "10000",
+  "dateCreated": {
+    "$date": "2024-03-23T10:12:49.291Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65feabe68fa3e81594429d2b"
+  },
+  "owneremail": "owner@gmail.com",
+  "email": "user@gmail.com",
+  "name": "Ab_Hotel",
+  "vacancy": "4",
+  "type": "Economy Single Room",
+  "price": "7000",
+  "cusname": "Anderson",
+  "personcount": "3",
+  "mobile": "9876543210",
+  "address": "No 134, Wellington main road, South Street, Ambattur, Chennai-600012",
+  "amount": "21000",
+  "dateCreated": {
+    "$date": "2024-03-23T10:16:06.459Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65feac4a8fa3e81594429d37"
+  },
+  "owneremail": "owner2@gmail.com",
+  "email": "user@gmail.com",
+  "name": "Pg_Hostel2",
+  "vacancy": "3",
+  "type": "Economy Single Room",
+  "price": "10000",
+  "cusname": "Kumar",
+  "personcount": "2",
+  "mobile": "9876543210",
+  "address": "No, 74, RSG Appartments, East KK nagar, Anna Nagar, Chennai-600041",
+  "amount": "20000",
+  "dateCreated": {
+    "$date": "2024-03-23T10:17:46.683Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6601034e32ff9a20e4aefacb"
+  },
+  "owneremail": "owner@gmail.com",
+  "email": "user@gmail.com",
+  "name": "Ab_Hotel",
+  "vacancy": "2",
+  "type": "Star",
+  "price": "1000",
+  "cusname": "Kumar",
+  "personcount": "1",
+  "mobile": "9876543210",
+  "address": "test",
+  "amount": "1000",
+  "dateCreated": {
+    "$date": "2024-03-25T04:53:34.236Z"
+  },
+  "__v": 0
+}]

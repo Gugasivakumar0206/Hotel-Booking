@@ -1,0 +1,28 @@
+[{
+  "_id": {
+    "$oid": "65fc17fb9de8ce4cfc956cb3"
+  },
+  "isAdmin": false,
+  "city": "Kumbakonam",
+  "name": "PG_User",
+  "email": "user@gmail.com",
+  "passwordHash": "$2a$10$KQH5Ykiz6DAV7f15gwPH6u5s2Q4x/XhVVWpd4h8x587oE.GrMo5OS",
+  "phone": "0987654321",
+  "question1": "dog",
+  "question2": "Hari",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65feb1093f31720d60a4efe2"
+  },
+  "isAdmin": false,
+  "city": "Thanjavur",
+  "name": "User2",
+  "email": "user2@gmail.com",
+  "passwordHash": "$2a$10$0NGA.BnTezw/B1Gj/3xU6.eqhvFUEaqAr3JZ8D6TUu.ZUT16TflS.",
+  "phone": "0987654321",
+  "question1": "dog",
+  "question2": "haran",
+  "__v": 0
+}]

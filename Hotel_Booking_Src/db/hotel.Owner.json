@@ -1,0 +1,28 @@
+[{
+  "_id": {
+    "$oid": "65fc17bf9de8ce4cfc956cac"
+  },
+  "isAdmin": false,
+  "city": "Kumbakonam",
+  "name": "PG_Owner",
+  "email": "owner@gmail.com",
+  "passwordHash": "$2a$10$ZxJQNDbVfEh4RpKJK/SNK.Rv4ILr23uWGHGinXlLTqSH3DRuLwzey",
+  "phone": "0987654321",
+  "question1": "dog",
+  "question2": "siva",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65fd375532e57d52e8bc77b1"
+  },
+  "isAdmin": false,
+  "city": "Chennai",
+  "name": "Pg_Hostel2",
+  "email": "owner2@gmail.com",
+  "passwordHash": "$2a$10$PY9gH15Txt683ZtdJTPJNuiwa498HKuVa.FJOX7Ykvgn8ykoz4ak.",
+  "phone": "0987654321",
+  "question1": "dog",
+  "question2": "haran",
+  "__v": 0
+}]
